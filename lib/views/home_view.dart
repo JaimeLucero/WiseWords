@@ -4,6 +4,8 @@ import 'package:wise_words/components/proverb_component.dart';
 
 class HomeView extends StatelessWidget{
   List<String> keyword = ['Keyword1','Keyword2'];
+
+  HomeView({super.key});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
