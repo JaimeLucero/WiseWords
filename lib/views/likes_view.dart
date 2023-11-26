@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/components/proverb_component.dart';
 
-class HomeView extends StatelessWidget{
+class LikesView extends StatelessWidget{
   List<String> keyword = ['Keyword1','Keyword2'];
   @override
   Widget build(BuildContext context) {
@@ -20,21 +20,16 @@ class HomeView extends StatelessWidget{
               children: [
                 Container(
                   padding: EdgeInsets.only(top: padding.top, left: 30, right: 20),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Home',
+                      Text(
+                        'Likes',
                         style: TextStyle(
                             fontFamily: 'Montserrat',
                             fontWeight: FontWeight.w900,
                             fontSize: 32,
                             color: Color(0xff1E1E1E)),
-                      ),
-                      SvgPicture.asset(
-                        'assets/images/cog.svg',
-                        height: 39,
-                        width: 39,
                       ),
                     ],
                   ),
