@@ -1,7 +1,6 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:wise_words/views/home_view.dart';
 import 'package:wise_words/views/view_template.dart';
 
 class WelcomeView extends StatefulWidget {

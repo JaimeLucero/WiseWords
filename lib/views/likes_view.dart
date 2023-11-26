@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/components/proverb_component.dart';
 
 class LikesView extends StatelessWidget{
   List<String> keyword = ['Keyword1','Keyword2'];
+
+  LikesView({super.key});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;

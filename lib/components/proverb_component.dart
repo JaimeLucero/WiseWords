@@ -74,7 +74,6 @@ class ProverbCard extends StatelessWidget {
                       height: 0,
                     ),
                   ),
-                  SizedBox(width: 50,),
                   GestureDetector(
                     onTap: () {
                       print('liked');
