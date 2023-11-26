@@ -74,14 +74,15 @@ class ProverbCard extends StatelessWidget {
                       height: 0,
                     ),
                   ),
+                  SizedBox(width: 50,),
                   GestureDetector(
                     onTap: () {
                       print('liked');
                     },
                     child: SvgPicture.asset(
                       'assets/images/heart.svg',
-                      width: 32,
-                      height: 32,
+                      width: 33,
+                      height: 33,
                       colorFilter: ColorFilter.mode(
                           const Color(0xffFCFCFC).withOpacity(liked ? 1.0 : 0.7),
                           BlendMode.srcIn),

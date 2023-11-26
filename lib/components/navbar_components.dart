@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/views/home_view.dart';
+import 'package:wise_words/views/likes_view.dart';
 
 class Navbar extends StatelessWidget {
   const Navbar({super.key, required this.iconColor, required this.page});
@@ -17,6 +19,7 @@ class Navbar extends StatelessWidget {
           children: [
             _buildSvgButton('assets/images/home.svg', iconColor, page == 'home', () {
               // Handle tap for the first button
+              
               print('Button 1 tapped!');
             }),
             const SizedBox(

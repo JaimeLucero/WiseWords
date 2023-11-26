@@ -2,6 +2,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:wise_words/views/home_view.dart';
+import 'package:wise_words/views/view_template.dart';
 
 class WelcomeView extends StatefulWidget {
   const WelcomeView({super.key});
@@ -17,11 +18,11 @@ class _WelcomeViewState extends State<WelcomeView> {
     super.initState();
 
     // Use a post-frame callback to navigate after the build is complete
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 3), () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomeView()),
+          MaterialPageRoute(builder: (context) => const ViewTemplate()),
         );
       });
     });
