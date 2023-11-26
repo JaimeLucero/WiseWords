@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   animated_text_kit: ^4.2.2
   delayed_display: ^2.0.0
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +22,12 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/welcome.png
+    - assets/images/heart.svg
+    - assets/images/home.svg
+    - assets/images/search.svg
+    - assets/images/cog.svg
+    - assets/images/share.svg
+
   fonts:
     - family: Montserrat
       fonts:
