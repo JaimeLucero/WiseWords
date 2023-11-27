@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/components/proverb_component.dart';
+import 'package:wise_words/views/settings_view.dart';
 
 class HomeView extends StatelessWidget{
   List<String> keyword = ['Keyword1','Keyword2'];
@@ -10,10 +11,9 @@ class HomeView extends StatelessWidget{
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    EdgeInsets padding = MediaQuery.of(context).padding;
 
     return Center(
-      child: SizedBox(
+      child: Container(
         width: width,
         height: height - 60,
         child: Stack(
@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget{
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: padding.top, left: 30, right: 20),
+                  padding: EdgeInsets.only(left: 30,right: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -33,10 +33,18 @@ class HomeView extends StatelessWidget{
                             fontSize: 32,
                             color: Color(0xff1E1E1E)),
                       ),
-                      SvgPicture.asset(
-                        'assets/images/cog.svg',
-                        height: 39,
-                        width: 39,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SettingsView()),
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/cog.svg',
+                          height: 39,
+                          width: 39,
+                        ),
                       ),
                     ],
                   ),

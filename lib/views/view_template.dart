@@ -20,9 +20,11 @@ class _ViewTemplateState extends State<ViewTemplate> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+   EdgeInsets padding = MediaQuery.of(context).padding;
 
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.only(top: padding.top),
         child: Center(
           child: Stack(
             children: [
@@ -37,7 +39,7 @@ class _ViewTemplateState extends State<ViewTemplate> {
                     Container(
                       width: width,
                       height:
-                          height - (60 + MediaQuery.of(context).padding.bottom),
+                          height - (100 + MediaQuery.of(context).padding.bottom),
                       decoration: const BoxDecoration(
                         color: Color(0xffFCFCFC),
                         borderRadius: BorderRadius.only(
