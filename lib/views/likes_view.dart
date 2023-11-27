@@ -9,7 +9,6 @@ class LikesView extends StatelessWidget{
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    EdgeInsets padding = MediaQuery.of(context).padding;
 
     return Center(
       child: SizedBox(
@@ -20,7 +19,7 @@ class LikesView extends StatelessWidget{
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: padding.top, left: 30, right: 20),
+                  padding: EdgeInsets.only(left: 30, right: 20),
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
