@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/views/settings_view.dart';
 
-class HomeView extends StatelessWidget{
-  List<String> keyword = ['Keyword1','Keyword2'];
+class HomeView extends StatelessWidget {
+  List<String> keyword = ['Keyword1', 'Keyword2'];
 
   HomeView({super.key});
   @override
@@ -21,7 +21,7 @@ class HomeView extends StatelessWidget{
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 30,right: 30),
+                  padding: const EdgeInsets.only(left: 30, right: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -37,7 +37,8 @@ class HomeView extends StatelessWidget{
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const SettingsView()),
+                            MaterialPageRoute(
+                                builder: (context) => const SettingsView()),
                           );
                         },
                         child: SvgPicture.asset(
@@ -52,17 +53,15 @@ class HomeView extends StatelessWidget{
                 Container(
                   padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ProverbCard(
-                        cardColor: Color(0xB2E50058),
-                        title: 'Proverbs ##',
-                        content:
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                        keywords: keyword,
-                        liked: false),
-                      ]
-                    ),
+                    child: Column(children: [
+                      ProverbCard(
+                          cardColor: const Color(0xB2E50058),
+                          title: 'Proverbs ##',
+                          content:
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+                          keywords: keyword,
+                          liked: false),
+                    ]),
                   ),
                 ),
               ],

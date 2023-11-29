@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class AboutView extends StatefulWidget {
-  const AboutView({super.key});
+class FiltersView extends StatefulWidget {
+  const FiltersView({super.key});
 
   @override
-  State<AboutView> createState() => _AboutViewState();
+  State<FiltersView> createState() => _FiltersViewState();
 }
 
-class _AboutViewState extends State<AboutView> {
+class _FiltersViewState extends State<FiltersView> {
   bool isDark = false;
+  String selectedChapter = 'Chapter 1';
+  String selectedVerse = 'Verse 1';
+
 
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
+    List<String> chapters = List.generate(31, (index) => 'Chapter ${index + 1}');
+    List<String> verses = List.generate(31, (index) => 'Verse ${index + 1}');
 
     return Scaffold(
       body: Container(
@@ -39,7 +44,7 @@ class _AboutViewState extends State<AboutView> {
                     width: 8,
                   ),
                   const Text(
-                    'About',
+                    'Filters',
                     style: TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w900,
@@ -49,6 +54,72 @@ class _AboutViewState extends State<AboutView> {
                 ],
               ),
             ),
+            Container(
+              padding: const EdgeInsets.only(top: 25, left: 60),
+              width: double.infinity,
+              child: const Text(
+                'Chapter:',
+                style: TextStyle(
+                    color: Color(0xFF1E1E1E),
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                ),
+              )
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 60, right: 60, top: 10),
+              width: double.infinity,
+              child: DropdownButton<String>(
+                value: selectedChapter,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedChapter = newValue!;
+                  });
+                },
+                isExpanded: false,
+                items: chapters.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.only(top: 25, left: 60),
+              width: double.infinity,
+              child: const Text(
+                'Verses:',
+                style: TextStyle(
+                    color: Color(0xFF1E1E1E),
+                    fontSize: 16,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w600,
+                    height: 0,
+                ),
+              )
+            ),
+            Container(
+              padding: const EdgeInsets.only(left: 60, right: 60, top: 10),
+              width: double.infinity,
+              child: DropdownButton<String>(
+                value: selectedVerse,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedVerse = newValue!;
+                  });
+                },
+                isExpanded: false,
+                items: verses.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            )
           ]
         ),
       )
