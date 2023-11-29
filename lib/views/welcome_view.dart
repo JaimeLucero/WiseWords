@@ -21,7 +21,7 @@ class _WelcomeViewState extends State<WelcomeView> {
       Future.delayed(const Duration(seconds: 3), () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ViewTemplate()),
+          MaterialPageRoute(builder: (context) => ViewTemplate(searchResult: false, query: "",)),
         );
       });
     });

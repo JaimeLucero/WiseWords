@@ -12,6 +12,14 @@ dependencies:
   animated_text_kit: ^4.2.2
   delayed_display: ^2.0.0
   flutter_svg: ^2.0.9
+  quiver: ^3.2.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/icon.png"
+  min_sdk_android: 21
 
 dev_dependencies:
   flutter_test:
@@ -30,6 +38,9 @@ flutter:
     - assets/images/filter.svg
     - assets/images/magnify.svg
     - assets/images/back.svg
+    - assets/images/icon.png
+    - assets/data/data_set_test.tsv
+
 
   fonts:
     - family: Montserrat

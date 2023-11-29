@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/views/filters_view.dart';
 import 'package:wise_words/views/searchresult_view.dart';
+import 'package:wise_words/views/view_template.dart';
 
 class Searchbar extends StatelessWidget {
   const Searchbar({super.key, required this.query});
@@ -30,6 +32,12 @@ class Searchbar extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => FiltersView(),
+                          ),
+                        );
                     print('filters');
                   },
                   child: SvgPicture.asset(
@@ -50,7 +58,7 @@ class Searchbar extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SearchResults(query: text,),
+                            builder: (context) => ViewTemplate(searchResult: true, query: text),
                           ),
                         );
                       }
