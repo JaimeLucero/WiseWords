@@ -15,11 +15,13 @@ class ViewTemplate extends StatefulWidget {
       required this.searchResult,
       required this.query,
       required this.data,
-      required this.queryList});
+      required this.queryList,
+      required this.filter});
   bool searchResult;
   final String query;
   final AvlData data;
   List<Proverb> queryList;
+  List<int> filter;
 
   @override
   State<ViewTemplate> createState() => _ViewTemplateState();
@@ -29,24 +31,38 @@ class _ViewTemplateState extends State<ViewTemplate> {
   bool showHome = true;
   bool showSearch = false;
   bool showLikes = false;
+  bool isLiked = false;
+  List<Proverb> proverbs = [];
+  List<Proverb> likes = [];
+  late GenerateHome initHome;
+  late GenerateLikes initLikes;
+
+  @override
+  void initState() {
+    super.initState();
+    initHome = GenerateHome(widget.data); // Initialize here
+    proverbs = initHome.initDataList();
+    initLikes = GenerateLikes(widget.data);
+    likes = initLikes.initDataList();
+  }
+
+  void initLikesList() {
+    initLikes = GenerateLikes(widget.data);
+    likes = initLikes.initDataList();
+  }
+
+  void handleLikeChanged(bool newLikeStatus) {
+    setState(() {
+      isLiked = newLikeStatus;
+    });
+    // You can perform additional actions based on the new like status
+  }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     EdgeInsets padding = MediaQuery.of(context).padding;
-    List<Proverb> proverbs = [];
-    List<Proverb> likes = [];
-
-    if (showHome) {
-      GenerateHome initHome = GenerateHome(widget.data);
-      proverbs = initHome.initDataList();
-    }
-
-    if (showLikes) {
-      GenerateLikes initLikes = GenerateLikes(widget.data);
-      likes = initLikes.initDataList();
-    }
 
     if (widget.searchResult) {
       showHome = false;
@@ -95,6 +111,8 @@ class _ViewTemplateState extends State<ViewTemplate> {
                                     showLikes = false;
                                     showSearch = false;
                                     widget.searchResult = false;
+                                    onLikedChange:
+                                    handleLikeChanged;
                                   }
                                 });
                                 print('Button 1 tapped!');
@@ -121,6 +139,7 @@ class _ViewTemplateState extends State<ViewTemplate> {
                               _buildSvgButton('assets/images/heart.svg',
                                   const Color(0xffFCFCFC), showLikes, () {
                                 // Handle tap for the first button
+                                initLikesList();
                                 setState(() {
                                   if (!showLikes) {
                                     showLikes = true;
@@ -138,10 +157,30 @@ class _ViewTemplateState extends State<ViewTemplate> {
                     ],
                   ),
                 ),
-                if (showHome) HomeView(data: proverbs, Avl: widget.data,),
-                if (showLikes) LikesView(data: likes),
-                if (showSearch) SearchView(data: widget.data.getDataList(), Avl: widget.data),
-                if (widget.searchResult) SearchResults(query: widget.query, data: widget.queryList, Avl: widget.data,),
+                if (showHome)
+                  HomeView(
+                    data: proverbs,
+                    Avl: widget.data,
+                    onLikedChange: handleLikeChanged,
+                    likes: initLikes,
+                  ),
+                if (showLikes)
+                  LikesView(
+                    data: likes,
+                    onLikedChange: handleLikeChanged,
+                    Avl: widget.data,
+                  ),
+                if (showSearch)
+                  SearchView(data: widget.data.getDataList(), Avl: widget.data),
+                if (widget.searchResult)
+                  SearchResults(
+                    query: widget.query,
+                    data: widget.queryList,
+                    Avl: widget.data,
+                    chapter: widget.filter[0],
+                    verse: widget.filter[1],
+                    onLikedChange: handleLikeChanged,
+                  ),
               ],
             ),
           ),

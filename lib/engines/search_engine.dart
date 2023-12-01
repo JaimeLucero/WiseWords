@@ -14,21 +14,49 @@ class SearchEngine {
   dataQuery() {
     data.forEach((element) {
       if (filter[0] == 0 && filter[1] == 0) {
-        if (element.getUnformatted().contains(query) ||
-            element.getKeywords().contains(query)) {
+        if (query != '') {
+          if (element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query)) {
+            result.add(element);
+          }
+        } else {
           result.add(element);
         }
       } else if (filter[0] == 0) {
-        if (element.getUnformatted().contains(query) ||
-            element.getKeywords().contains(query) &&
-                element.getVerse() == filter[1]) {
-          result.add(element);
+        if (query != '') {
+          if (element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query) &&
+                  element.getVerse() == filter[1]) {
+            result.add(element);
+          }
+        } else {
+          if (element.getVerse() == filter[1]) {
+            result.add(element);
+          }
         }
       } else if (filter[1] == 0) {
-        if (element.getUnformatted().contains(query) ||
-            element.getKeywords().contains(query) &&
-                element.getVerse() == filter[0]) {
-          result.add(element);
+        if (query != '') {
+          if (element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query) &&
+                  element.getChapter() == filter[0]) {
+            result.add(element);
+          }
+        } else {
+          if (element.getChapter() == filter[0]) {
+            result.add(element);
+          }
+        }
+      } else {
+        if (query != '') {
+          if ((element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query)) &&
+                  (element.getChapter() == filter[0] && element.getVerse() == filter[1])) {
+            result.add(element);
+          } 
+        } else {
+          if (element.getChapter() == filter[0] && element.getVerse() == filter[1]) {
+            result.add(element);
+          }
         }
       }
     });

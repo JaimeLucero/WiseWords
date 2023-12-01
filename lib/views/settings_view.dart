@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/engines/likes_generator.dart';
 import 'package:wise_words/views/about_view.dart';
 
 class SettingsView extends StatefulWidget {
-  const SettingsView({super.key});
-
+  SettingsView({super.key, required this.likes, required this.Avl});
+  final GenerateLikes likes;
+  AvlData Avl;
   @override
   State<SettingsView> createState() => _SettingsViewState();
 }
@@ -54,13 +57,14 @@ class _SettingsViewState extends State<SettingsView> {
             Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: Container(
                     height: 30,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Theme',
                           style: TextStyle(
                             color: Color(0xFF1E1E1E),
@@ -82,13 +86,14 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: Container(
                     height: 30,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           'Notifications',
                           style: TextStyle(
                             color: Color(0xFF1E1E1E),
@@ -110,19 +115,25 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: Container(
                     height: 30,
                     child: Row(
                       children: [
-                        Text(
-                          'Clear Favorites',
-                          style: TextStyle(
-                            color: Color(0xFF1E1E1E),
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
+                        GestureDetector(
+                          onTap: () {
+                            showClearLikesConfirmation(context);
+                          },
+                          child: const Text(
+                            'Clear Likes',
+                            style: TextStyle(
+                              color: Color(0xFF1E1E1E),
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
+                              height: 0,
+                            ),
                           ),
                         ),
                       ],
@@ -130,7 +141,8 @@ class _SettingsViewState extends State<SettingsView> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
                   child: Container(
                     height: 30,
                     child: Row(
@@ -143,7 +155,7 @@ class _SettingsViewState extends State<SettingsView> {
                                   builder: (context) => const AboutView()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'About',
                             style: TextStyle(
                               color: Color(0xFF1E1E1E),
@@ -160,23 +172,51 @@ class _SettingsViewState extends State<SettingsView> {
                 ),
               ],
             ),
-            SizedBox(height: 536,),
+            const SizedBox(
+              height: 536,
+            ),
             Container(
-              padding: EdgeInsets.only(bottom: padding.bottom),
-              child: Text(
-                'Build v0.0.0.0',
-                style: TextStyle(
-                color: Color(0xFF1E1E1E),
-                fontSize: 14,
-                fontFamily: 'Montserrat',
-                fontWeight: FontWeight.w400,
-                height: 0,
-                ),
-                )
-            )
+                padding: EdgeInsets.only(bottom: padding.bottom),
+                child: const Text(
+                  'Build v0.0.0.0',
+                  style: TextStyle(
+                    color: Color(0xFF1E1E1E),
+                    fontSize: 14,
+                    fontFamily: 'Montserrat',
+                    fontWeight: FontWeight.w400,
+                    height: 0,
+                  ),
+                ))
           ],
         ),
       ),
+    );
+  }
+
+  void showClearLikesConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text('Are you sure you want to clear your likes?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                widget.Avl.clearLikes();
+                Navigator.of(context)
+                    .pop(); // Close the dialog after clearing likes
+              },
+              child: const Text('Clear'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

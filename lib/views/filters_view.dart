@@ -10,16 +10,15 @@ class FiltersView extends StatefulWidget {
 
 class _FiltersViewState extends State<FiltersView> {
   bool isDark = false;
-  String selectedChapter = 'Chapter 1';
-  String selectedVerse = 'Verse 1';
-  List<int> selected = [];
+  String selectedChapter = 'Chapter 0';
+  String selectedVerse = 'Verse 0';
+  List<int> selected = [0, 0];
 
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
-    List<String> chapters =
-        List.generate(31, (index) => 'Chapter ${index + 1}');
-    List<String> verses = List.generate(31, (index) => 'Verse ${index + 1}');
+    List<String> chapters = List.generate(31, (index) => 'Chapter ${index}');
+    List<String> verses = List.generate(31, (index) => 'Verse ${index}');
 
     return Scaffold(
         body: Container(
@@ -36,10 +35,7 @@ class _FiltersViewState extends State<FiltersView> {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(
-                    context,
-                    selected
-                  );
+                  Navigator.pop(context, selected);
                 },
                 child: SvgPicture.asset('assets/images/back.svg'),
               ),
@@ -78,6 +74,7 @@ class _FiltersViewState extends State<FiltersView> {
             onChanged: (String? newValue) {
               setState(() {
                 selectedChapter = newValue!;
+                selected[0] = chapters.indexOf(newValue);
               });
             },
             isExpanded: false,
@@ -110,6 +107,7 @@ class _FiltersViewState extends State<FiltersView> {
             onChanged: (String? newValue) {
               setState(() {
                 selectedVerse = newValue!;
+                selected[1] = verses.indexOf(newValue);
               });
             },
             isExpanded: false,

@@ -10,11 +10,13 @@ class GenerateLikes {
   }
 
   List<Proverb> initDataList() {
-    for (var proverb in data.getDataList()) {
-      if (proverb.ifLike()) {
-        proverbList.add(proverb);
+    proverbList.clear();
+
+    data.forEach((element) {
+      if (element.ifLike()) {
+        proverbList.add(element);
       }
-    }
+    });
     return proverbList;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/avltree/initalize_avl.dart';
@@ -7,10 +8,16 @@ import 'package:wise_words/views/proverb_view.dart';
 
 class ProverbCard extends StatelessWidget {
   const ProverbCard(
-      {super.key, required this.cardColor, required this.proverb, required this.Avl});
+      {super.key,
+      required this.cardColor,
+      required this.proverb,
+      required this.Avl,
+      required this.onLikedChange});
   final Color cardColor;
   final Proverb proverb;
   final AvlData Avl;
+  final Function(bool) onLikedChange;
+
   @override
   Widget build(BuildContext context) {
     RelatedProverbs initRelated = RelatedProverbs(Avl, proverb);
@@ -21,10 +28,11 @@ class ProverbCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => ProverbView(
-                    liked: false,
+                    liked: proverb.ifLike(),
                     proverb: proverb,
                     data: initRelated.getRelated(),
                     Avl: Avl,
+                    onLikedChange: onLikedChange,
                   )),
         );
         print('Proverb card tapped');
@@ -100,7 +108,10 @@ class ProverbCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            print('liked');
+                            bool newLikeStatus = !proverb.ifLike();
+                            proverb.setLike(newLikeStatus);
+                            onLikedChange(newLikeStatus);
+                            print(proverb.ifLike());
                           },
                           child: SvgPicture.asset(
                             'assets/images/heart.svg',
@@ -108,15 +119,23 @@ class ProverbCard extends StatelessWidget {
                             height: 33,
                             colorFilter: ColorFilter.mode(
                                 const Color(0xffFCFCFC)
-                                    .withOpacity(proverb.ifLike() ? 1.0 : 0.7),
+                                    .withOpacity(proverb.ifLike() ? 1.0 : 0.5),
                                 BlendMode.srcIn),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () {String textToCopy = proverb.toString();
+                            FlutterClipboard.copy(textToCopy).then((value) {
+                              // Clipboard content is now in the clipboard
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Text copied to clipboard'),
+                                ),
+                              );
+                            });
                             print('shared');
                           },
                           child: SvgPicture.asset(

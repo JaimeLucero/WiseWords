@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 
-class LikesView extends StatelessWidget{
-  List<String> keyword = ['Keyword1','Keyword2'];
+class LikesView extends StatelessWidget {
+  List<String> keyword = ['Keyword1', 'Keyword2'];
   List<Proverb> data = [];
-
-  LikesView({super.key, required this.data});
+  AvlData Avl;
+  final Function(bool) onLikedChange;
+  
+  LikesView({super.key, required this.data, required this.onLikedChange, required this.Avl});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -36,7 +39,35 @@ class LikesView extends StatelessWidget{
                     ],
                   ),
                 ),
-                
+                Container(
+                  height: height - MediaQuery.of(context).padding.bottom - 145,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      padding:
+                          const EdgeInsets.only(top: 45, left: 30, right: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: data
+                            .map(
+                              (item) => Column(
+                                children: [
+                                  ProverbCard(
+                                    cardColor: Color(0xB2E50058),
+                                    proverb: item,
+                                    Avl: Avl,
+                                    onLikedChange: onLikedChange,
+                                  ),
+                                  SizedBox(
+                                      height:
+                                          16), // Adjust the height based on your preference
+                                ],
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
