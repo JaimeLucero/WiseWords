@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/avltree/proverb.dart';
+import 'package:wise_words/engines/home_generator.dart';
+import 'package:wise_words/engines/likes_generator.dart';
 import 'package:wise_words/views/home_view.dart';
 import 'package:wise_words/views/likes_view.dart';
 import 'package:wise_words/views/search_view.dart';
 import 'package:wise_words/views/searchresult_view.dart';
 
 class ViewTemplate extends StatefulWidget {
-  ViewTemplate({super.key, required this.searchResult, required this.query});
+  ViewTemplate(
+      {super.key,
+      required this.searchResult,
+      required this.query,
+      required this.data,
+      required this.queryList});
   bool searchResult;
   final String query;
+  final AvlData data;
+  List<Proverb> queryList;
+
   @override
   State<ViewTemplate> createState() => _ViewTemplateState();
 }
@@ -23,9 +35,23 @@ class _ViewTemplateState extends State<ViewTemplate> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     EdgeInsets padding = MediaQuery.of(context).padding;
+    List<Proverb> proverbs = [];
+    List<Proverb> likes = [];
+
+    if (showHome) {
+      GenerateHome initHome = GenerateHome(widget.data);
+      proverbs = initHome.initDataList();
+    }
+
+    if (showLikes) {
+      GenerateLikes initLikes = GenerateLikes(widget.data);
+      likes = initLikes.initDataList();
+    }
+
     if (widget.searchResult) {
       showHome = false;
     }
+
     return MaterialApp(
       home: Scaffold(
         body: Container(
@@ -78,7 +104,7 @@ class _ViewTemplateState extends State<ViewTemplate> {
                               ),
                               _buildSvgButton('assets/images/search.svg',
                                   const Color(0xffFCFCFC), showSearch, () {
-                                // Handle tap for theho first button
+                                // Handle tap for the first button
                                 setState(() {
                                   if (!showSearch) {
                                     showSearch = true;
@@ -112,10 +138,10 @@ class _ViewTemplateState extends State<ViewTemplate> {
                     ],
                   ),
                 ),
-                if (showHome) HomeView(),
-                if (showLikes) LikesView(),
-                if (showSearch) SearchView(),
-                if (widget.searchResult) SearchResults(query: widget.query),
+                if (showHome) HomeView(data: proverbs, Avl: widget.data,),
+                if (showLikes) LikesView(data: likes),
+                if (showSearch) SearchView(data: widget.data.getDataList(), Avl: widget.data),
+                if (widget.searchResult) SearchResults(query: widget.query, data: widget.queryList, Avl: widget.data,),
               ],
             ),
           ),

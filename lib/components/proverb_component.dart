@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/avltree/proverb.dart';
+import 'package:wise_words/engines/related_proverbs.dart';
 import 'package:wise_words/views/proverb_view.dart';
 
 class ProverbCard extends StatelessWidget {
   const ProverbCard(
-      {super.key,
-      required this.cardColor,
-      required this.title,
-      required this.content,
-      required this.keywords,
-      required this.liked});
+      {super.key, required this.cardColor, required this.proverb, required this.Avl});
   final Color cardColor;
-  final String title;
-  final String content;
-  final List<String> keywords;
-  final bool liked;
-
+  final Proverb proverb;
+  final AvlData Avl;
   @override
   Widget build(BuildContext context) {
+    RelatedProverbs initRelated = RelatedProverbs(Avl, proverb);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => const ProverbView(
+              builder: (context) => ProverbView(
                     liked: false,
+                    proverb: proverb,
+                    data: initRelated.getRelated(),
+                    Avl: Avl,
                   )),
         );
         print('Proverb card tapped');
@@ -45,7 +45,7 @@ class ProverbCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 25),
               width: double.infinity,
               child: Text(
-                title,
+                'Proverbs: ${proverb.getChapter()} : ${proverb.getVerse()}',
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                   fontFamily: 'Montserrat',
@@ -62,7 +62,7 @@ class ProverbCard extends StatelessWidget {
               padding: const EdgeInsets.only(left: 25, right: 25),
               width: double.infinity,
               child: Text(
-                content,
+                proverb.getFormatted(),
                 style: const TextStyle(
                   color: Color(0xFFFCFCFC),
                   fontSize: 16,
@@ -72,9 +72,6 @@ class ProverbCard extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 5,
-            ),
             Container(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: SizedBox(
@@ -82,37 +79,51 @@ class ProverbCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      keywords[0] + ' | ' + keywords[1],
-                      style: const TextStyle(
-                        color: Color(0xFFFCFCFC),
-                        fontSize: 14,
-                        fontFamily: 'Montserrat',
-                        fontWeight: FontWeight.w400,
-                        height: 0,
+                    Container(
+                      width: 200,
+                      child: Text(
+                        proverb.getKeywords().isNotEmpty
+                            ? proverb.getKeywords().length >= 3
+                                ? '${proverb.getKeywords()[0]} | ${proverb.getKeywords()[1]} | ${proverb.getKeywords()[2]}'
+                                : proverb.getKeywords().join(' | ')
+                            : 'No Keywords',
+                        style: const TextStyle(
+                          color: Color(0xFFFCFCFC),
+                          fontSize: 14,
+                          fontFamily: 'Montserrat',
+                          fontWeight: FontWeight.w400,
+                          height: 0,
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        print('liked');
-                      },
-                      child: SvgPicture.asset(
-                        'assets/images/heart.svg',
-                        width: 33,
-                        height: 33,
-                        colorFilter: ColorFilter.mode(
-                            const Color(0xffFCFCFC)
-                                .withOpacity(liked ? 1.0 : 0.7),
-                            BlendMode.srcIn),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        print('shared');
-                      },
-                      child: SvgPicture.asset(
-                        'assets/images/share.svg',
-                      ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            print('liked');
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/heart.svg',
+                            width: 33,
+                            height: 33,
+                            colorFilter: ColorFilter.mode(
+                                const Color(0xffFCFCFC)
+                                    .withOpacity(proverb.ifLike() ? 1.0 : 0.7),
+                                BlendMode.srcIn),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            print('shared');
+                          },
+                          child: SvgPicture.asset(
+                            'assets/images/share.svg',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
