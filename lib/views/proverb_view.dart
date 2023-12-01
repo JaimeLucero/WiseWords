@@ -10,16 +10,20 @@ class ProverbView extends StatefulWidget {
       required this.liked,
       required this.proverb,
       required this.data,
-      required this.Avl});
+      required this.Avl,
+      required this.onLikedChange});
   final bool liked;
   final Proverb proverb;
   final List<Proverb> data;
   final AvlData Avl;
+  final Function(bool) onLikedChange;
+
   @override
   State<ProverbView> createState() => _ProverbViewState();
 }
 
 class _ProverbViewState extends State<ProverbView> {
+
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
@@ -116,7 +120,10 @@ class _ProverbViewState extends State<ProverbView> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print('liked');
+                          bool newLikeStatus = !widget.proverb.ifLike();
+                            widget.proverb.setLike(newLikeStatus);
+                            widget.onLikedChange(newLikeStatus);
+                            print(widget.proverb.ifLike());
                         },
                         child: SvgPicture.asset(
                           'assets/images/heart.svg',
@@ -124,7 +131,7 @@ class _ProverbViewState extends State<ProverbView> {
                           height: 33,
                           colorFilter: ColorFilter.mode(
                               const Color(0xff1E1E1E)
-                                  .withOpacity(widget.liked ? 1.0 : 0.7),
+                                  .withOpacity(widget.proverb.ifLike() ? 1.0 : 0.5),
                               BlendMode.srcIn),
                         ),
                       ),
@@ -173,6 +180,7 @@ class _ProverbViewState extends State<ProverbView> {
                                 cardColor: Color(0xB2E50058),
                                 proverb: item,
                                 Avl:widget.Avl,
+                                onLikedChange: widget.onLikedChange,
                               ),
                               SizedBox(
                                   height:

@@ -60,6 +60,12 @@ class AvlData extends AvlTreeSet<Proverb> {
     return data;
   }
 
+  clearLikes() {
+    super.forEach((element) {
+      element.setLike(false);
+    });
+  }
+
   bool isDone() {
     return done;
   }

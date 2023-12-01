@@ -3,12 +3,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
+import 'package:wise_words/engines/likes_generator.dart';
 import 'package:wise_words/views/settings_view.dart';
 
 class HomeView extends StatelessWidget {
   List<Proverb> data = [];
   AvlData Avl;
-  HomeView({super.key, required this.data, required this.Avl});
+  Function(bool) onLikedChange;
+  GenerateLikes likes;
+
+  HomeView(
+      {super.key,
+      required this.data,
+      required this.Avl,
+      required this.onLikedChange,
+      required this.likes});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -40,7 +49,7 @@ class HomeView extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const SettingsView()),
+                                    builder: (context) => SettingsView(likes: likes, Avl: Avl,)),
                               );
                             },
                             child: SvgPicture.asset(
@@ -69,6 +78,7 @@ class HomeView extends StatelessWidget {
                                         cardColor: Color(0xB2E50058),
                                         proverb: item,
                                         Avl: Avl,
+                                        onLikedChange: onLikedChange,
                                       ),
                                       SizedBox(
                                           height:

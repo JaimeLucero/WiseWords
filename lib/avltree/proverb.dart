@@ -51,6 +51,10 @@ class Proverb implements Comparable<Proverb> {
     return like;
   }
 
+  setLike(bool like) {
+    this.like = like;
+  }
+
   @override
   String toString() {
     return 'Proverb{chapter: $chapter, verse: $verse, unformatted: $unformatted, formatted: $formatted, keywords: $keywords, like: $like}';

@@ -12,7 +12,7 @@ class Searchbar extends StatelessWidget {
   final String query;
   final List<Proverb> data;
   final AvlData Avl;
-  List<int> filter = [];
+  List<int> filter = [0,0];
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +59,6 @@ class Searchbar extends StatelessWidget {
                         Avl,
                         filter,
                       );
-                      // Call your navigation logic here
-                      if (text.isNotEmpty) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -69,10 +67,10 @@ class Searchbar extends StatelessWidget {
                               query: text,
                               queryList: search.getResults(),
                               data: Avl,
+                              filter: filter,
                             ),
                           ),
                         );
-                      }
                     },
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
@@ -107,15 +105,11 @@ class Searchbar extends StatelessWidget {
   }
 
   Future<List<int>> _filtersView(BuildContext context) async {
-    // Navigator.push returns a Future that completes after calling
-    // Navigator.pop on the Selection Screen.
     List<int> filter = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const FiltersView()),
     );
 
-    // When a BuildContext is used from a StatefulWidget, the mounted property
-    // must be checked after an asynchronous gap.
     return filter;
   }
 }
