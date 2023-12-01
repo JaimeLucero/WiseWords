@@ -1,11 +1,12 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/views/view_template.dart';
 
 class WelcomeView extends StatefulWidget {
-  const WelcomeView({super.key});
-
+  const WelcomeView({super.key, required this.data});
+  final AvlData data;
   @override
   State<WelcomeView> createState() => _WelcomeViewState();
 }
@@ -21,7 +22,7 @@ class _WelcomeViewState extends State<WelcomeView> {
       Future.delayed(const Duration(seconds: 3), () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => ViewTemplate(searchResult: false, query: "",)),
+          MaterialPageRoute(builder: (context) => ViewTemplate(searchResult: false, query: "", data: widget.data, queryList: [],)),
         );
       });
     });

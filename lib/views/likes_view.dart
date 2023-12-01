@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 
 class LikesView extends StatelessWidget{
   List<String> keyword = ['Keyword1','Keyword2'];
+  List<Proverb> data = [];
 
-  LikesView({super.key});
+  LikesView({super.key, required this.data});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -34,22 +36,7 @@ class LikesView extends StatelessWidget{
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ProverbCard(
-                        cardColor: Color(0xB2E50058),
-                        title: 'Proverbs ##',
-                        content:
-                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                        keywords: keyword,
-                        liked: false),
-                      ]
-                    ),
-                  ),
-                ),
+                
               ],
             ),
           ],

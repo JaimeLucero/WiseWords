@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/components/searchbar_component.dart';
 
 class SearchResults extends StatelessWidget {
   List<String> keyword = ['Keyword1', 'Keyword2'];
 
-  SearchResults({super.key, required this.query});
-  final query;
+  SearchResults({super.key, required this.query, required this.data, required this.Avl});
+  final String query;
+  final List<Proverb> data;
+  final AvlData Avl;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,11 @@ class SearchResults extends StatelessWidget {
       height: height - 60,
       child: Column(
         children: [
-          Searchbar(query: query),
+          Searchbar(
+            query: query,
+            data: data,
+            Avl: Avl,
+          ),
           Row(
             children: [
               Container(
@@ -35,11 +43,9 @@ class SearchResults extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 60,
-              ),
+              SizedBox(width: 16,),
               Container(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, left: 30),
                 child: const Text(
                   'Verse: #',
                   style: TextStyle(
@@ -56,20 +62,33 @@ class SearchResults extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: Column(children: [
-                ProverbCard(
-                    cardColor: const Color(0xB2E50058),
-                    title: 'Proverbs ##',
-                    content:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                    keywords: keyword,
-                    liked: false),
-              ]),
-            ),
-          ),
+          Container(
+                height: height - MediaQuery.of(context).padding.bottom - 210,
+                child: SingleChildScrollView(
+                  child: Container(
+                    padding:
+                        const EdgeInsets.only(top: 45, left: 30, right: 30),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: data
+                          .map(
+                            (item) => Column(
+                              children: [
+                                ProverbCard(
+                                    cardColor: Color(0xB2E50058),
+                                    proverb: item,
+                                    Avl: Avl,),
+                                SizedBox(
+                                    height:
+                                        16), // Adjust the height based on your preference
+                              ],
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ),
         ],
       ),
     );

@@ -1,20 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 
 class ProverbView extends StatefulWidget {
-  const ProverbView({super.key, required this.liked});
+  const ProverbView(
+      {super.key,
+      required this.liked,
+      required this.proverb,
+      required this.data,
+      required this.Avl});
   final bool liked;
+  final Proverb proverb;
+  final List<Proverb> data;
+  final AvlData Avl;
   @override
   State<ProverbView> createState() => _ProverbViewState();
 }
 
 class _ProverbViewState extends State<ProverbView> {
-  List<String> keyword = ['Keyword1','Keyword2'];
-
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
+    var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Container(
@@ -39,9 +48,9 @@ class _ProverbViewState extends State<ProverbView> {
                   const SizedBox(
                     width: 8,
                   ),
-                  const Text(
-                    'Proverbs ##',
-                    style: TextStyle(
+                  Text(
+                    'Proverbs ${widget.proverb.getChapter()} : ${widget.proverb.getVerse()}',
+                    style: const TextStyle(
                         fontFamily: 'Montserrat',
                         fontWeight: FontWeight.w900,
                         fontSize: 32,
@@ -54,10 +63,10 @@ class _ProverbViewState extends State<ProverbView> {
               padding: const EdgeInsets.only(left: 50, right: 50, top: 30),
               width: double.infinity,
               height: null,
-              child: const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
+              child: Text(
+                '${widget.proverb.getFormatted()}',
                 textAlign: TextAlign.justify,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Color(0xFF1E1E1E),
                   fontSize: 16,
                   fontFamily: 'Montserrat',
@@ -87,41 +96,49 @@ class _ProverbViewState extends State<ProverbView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Keyword 1 | Keyword 2',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w400,
-                      height: 0,
+                  Container(
+                    width: 200,
+                    child: Text(
+                      widget.proverb.getKeywords().join(' | '),
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontFamily: 'Montserrat',
+                        fontWeight: FontWeight.w400,
+                        height: 0,
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 10,),
-                  GestureDetector(
-                    onTap: () {
-                      print('liked');
-                    },
-                    child: SvgPicture.asset(
-                      'assets/images/heart.svg',
-                      width: 33,
-                      height: 33,
-                      colorFilter: ColorFilter.mode(
-                          const Color(0xff1E1E1E)
-                              .withOpacity(widget.liked ? 1.0 : 0.7),
-                          BlendMode.srcIn),
-                    ),
+                  const SizedBox(
+                    width: 10,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      print('shared');
-                    },
-                    child: SvgPicture.asset(
-                      'assets/images/share.svg',
-                      colorFilter: const ColorFilter.mode(
-                          Color(0xff1E1E1E),
-                          BlendMode.srcIn),
-                    ),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          print('liked');
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/heart.svg',
+                          width: 33,
+                          height: 33,
+                          colorFilter: ColorFilter.mode(
+                              const Color(0xff1E1E1E)
+                                  .withOpacity(widget.liked ? 1.0 : 0.7),
+                              BlendMode.srcIn),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          print('shared');
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/share.svg',
+                          colorFilter: const ColorFilter.mode(
+                              Color(0xff1E1E1E), BlendMode.srcIn),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -130,42 +147,44 @@ class _ProverbViewState extends State<ProverbView> {
               width: double.infinity,
               padding: const EdgeInsets.only(left: 50, top: 35),
               child: const Text(
-                  'Related Proverbs:',
-                  textAlign: TextAlign.justify,
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w800,
-                      height: 0,
-                  ),
-              ),
-            ),
-            SingleChildScrollView(
-              child: Container(
-                padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ProverbCard(
-                      cardColor: const Color(0xB2E50058),
-                      title: 'Proverbs ##',
-                      content:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                      keywords: keyword,
-                      liked: false),
-                    const SizedBox(height: 10,),
-                    ProverbCard(
-                      cardColor: const Color(0xB2E50058),
-                      title: 'Proverbs ##',
-                      content:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ',
-                      keywords: keyword,
-                      liked: false),
-                  ],
+                'Related Proverbs:',
+                textAlign: TextAlign.justify,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: 'Montserrat',
+                  fontWeight: FontWeight.w800,
+                  height: 0,
                 ),
               ),
-            )
+            ),
+            Container(
+              height: height - MediaQuery.of(context).padding.bottom - 330,
+              child: SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.only(top: 45, left: 30, right: 30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: widget.data
+                        .map(
+                          (item) => Column(
+                            children: [
+                              ProverbCard(
+                                cardColor: Color(0xB2E50058),
+                                proverb: item,
+                                Avl:widget.Avl,
+                              ),
+                              SizedBox(
+                                  height:
+                                      16), // Adjust the height based on your preference
+                            ],
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

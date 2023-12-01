@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wise_words/avltree/initalize_avl.dart';
+import 'package:wise_words/avltree/proverb.dart';
+import 'package:wise_words/engines/search_engine.dart';
 import 'package:wise_words/views/filters_view.dart';
-import 'package:wise_words/views/searchresult_view.dart';
 import 'package:wise_words/views/view_template.dart';
 
 class Searchbar extends StatelessWidget {
-  const Searchbar({super.key, required this.query});
-  final query;
+  Searchbar(
+      {super.key, required this.query, required this.data, required this.Avl});
+  final String query;
+  final List<Proverb> data;
+  final AvlData Avl;
+  List<int> filter = [];
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +37,9 @@ class Searchbar extends StatelessWidget {
                   width: 15,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => FiltersView(),
-                          ),
-                        );
-                    print('filters');
+                  onTap: () async {
+                    filter = await _filtersView(context);
+                    print('filters ${filter.toList()}');
                   },
                   child: SvgPicture.asset(
                     'assets/images/filter.svg',
@@ -53,12 +54,22 @@ class Searchbar extends StatelessWidget {
                   child: TextField(
                     controller: _textController,
                     onSubmitted: (text) {
+                      SearchEngine search = SearchEngine(
+                        text,
+                        Avl,
+                        filter,
+                      );
                       // Call your navigation logic here
                       if (text.isNotEmpty) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ViewTemplate(searchResult: true, query: text),
+                            builder: (context) => ViewTemplate(
+                              searchResult: true,
+                              query: text,
+                              queryList: search.getResults(),
+                              data: Avl,
+                            ),
                           ),
                         );
                       }
@@ -93,5 +104,18 @@ class Searchbar extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<List<int>> _filtersView(BuildContext context) async {
+    // Navigator.push returns a Future that completes after calling
+    // Navigator.pop on the Selection Screen.
+    List<int> filter = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FiltersView()),
+    );
+
+    // When a BuildContext is used from a StatefulWidget, the mounted property
+    // must be checked after an asynchronous gap.
+    return filter;
   }
 }
