@@ -17,8 +17,8 @@ class _FiltersViewState extends State<FiltersView> {
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
-    List<String> chapters = List.generate(31, (index) => 'Chapter ${index}');
-    List<String> verses = List.generate(31, (index) => 'Verse ${index}');
+    List<String> chapters = List.generate(32, (index) => 'Chapter ${index}');
+    List<String> verses = List.generate(32, (index) => 'Verse ${index}');
 
     return Scaffold(
         body: Container(

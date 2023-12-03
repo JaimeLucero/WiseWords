@@ -59,4 +59,12 @@ class Proverb implements Comparable<Proverb> {
   String toString() {
     return 'Proverb{chapter: $chapter, verse: $verse, unformatted: $unformatted, formatted: $formatted, keywords: $keywords, like: $like}';
   }
+
+  String toWrite() {
+    return '$id $chapter  $verse  $unformatted $unformatted $formatted  ${keywords.join(',')}  $like';
+  }
+
+  List<dynamic> toList() {
+    return [id, chapter, verse, unformatted, formatted, keywords.join(',').toString(), like];
+  }
 }
