@@ -119,11 +119,27 @@ class _ProverbViewState extends State<ProverbView> {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          await widget.Avl.writeFile();
                           bool newLikeStatus = !widget.proverb.ifLike();
-                            widget.proverb.setLike(newLikeStatus);
-                            widget.onLikedChange(newLikeStatus);
-                            print(widget.proverb.ifLike());
+                          widget.proverb.setLike(newLikeStatus);
+                          widget.onLikedChange(newLikeStatus);
+                          if(newLikeStatus) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Proverb added to likes.'),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Proverb removed from likes.'),
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                          }
+                          print(widget.proverb.ifLike());
                         },
                         child: SvgPicture.asset(
                           'assets/images/heart.svg',

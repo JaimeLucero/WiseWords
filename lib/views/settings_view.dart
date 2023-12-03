@@ -19,9 +19,11 @@ class _SettingsViewState extends State<SettingsView> {
   @override
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
+    var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: Container(
+        height: height,
         decoration: const BoxDecoration(
           color: Color(0xffFCFCFC),
         ),
@@ -208,6 +210,7 @@ class _SettingsViewState extends State<SettingsView> {
             ),
             TextButton(
               onPressed: () {
+                widget.Avl.removeFile();
                 widget.Avl.clearLikes();
                 Navigator.of(context)
                     .pop(); // Close the dialog after clearing likes

@@ -88,7 +88,7 @@ class ProverbCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      width: 200,
+                      width: MediaQuery.of(context).size.width - 200,
                       child: Text(
                         proverb.getKeywords().isNotEmpty
                             ? proverb.getKeywords().length >= 3
@@ -107,10 +107,27 @@ class ProverbCard extends StatelessWidget {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            await Avl.writeFile();
                             bool newLikeStatus = !proverb.ifLike();
                             proverb.setLike(newLikeStatus);
                             onLikedChange(newLikeStatus);
+                            if(newLikeStatus){
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Proverb added to likes.'),
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Proverb removed from likes.'),
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            }
+                            await Future.delayed(Duration(seconds: 2));
                             print(proverb.ifLike());
                           },
                           child: SvgPicture.asset(
@@ -127,7 +144,8 @@ class ProverbCard extends StatelessWidget {
                           width: 20,
                         ),
                         GestureDetector(
-                          onTap: () {String textToCopy = proverb.toString();
+                          onTap: () {
+                            String textToCopy = proverb.toString();
                             FlutterClipboard.copy(textToCopy).then((value) {
                               // Clipboard content is now in the clipboard
                               ScaffoldMessenger.of(context).showSnackBar(
