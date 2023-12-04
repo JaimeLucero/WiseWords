@@ -3,6 +3,7 @@ import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/components/searchbar_component.dart';
+import 'package:wise_words/theme/colors.dart';
 
 class SearchResults extends StatelessWidget {
   List<String> keyword = ['Keyword1', 'Keyword2'];
@@ -20,7 +21,7 @@ class SearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    EdgeInsets padding = MediaQuery.of(context).padding;
+    AppColors color = AppColors();
 
     return Container(
       width: width,
@@ -80,7 +81,7 @@ class SearchResults extends StatelessWidget {
                         (item) => Column(
                           children: [
                             ProverbCard(
-                              cardColor: const Color(0xB2E50058),
+                              cardColor: color.getNextColor(),
                               proverb: item,
                               Avl: Avl,
                               onLikedChange: onLikedChange,

@@ -7,7 +7,7 @@ import 'package:wise_words/views/about_view.dart';
 class SettingsView extends StatefulWidget {
   SettingsView({super.key, required this.likes, required this.Avl});
   final GenerateLikes likes;
-  AvlData Avl;
+  final AvlData Avl;
   @override
   State<SettingsView> createState() => _SettingsViewState();
 }
@@ -58,64 +58,6 @@ class _SettingsViewState extends State<SettingsView> {
             ),
             Column(
               children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                  child: Container(
-                    height: 30,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Theme',
-                          style: TextStyle(
-                            color: Color(0xFF1E1E1E),
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                        Switch(
-                            value: isDark,
-                            onChanged: (newValue) {
-                              setState(() {
-                                isDark = newValue;
-                              });
-                            })
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 5),
-                  child: Container(
-                    height: 30,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Notifications',
-                          style: TextStyle(
-                            color: Color(0xFF1E1E1E),
-                            fontSize: 16,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                        Switch(
-                            value: notifOn,
-                            onChanged: (newValue) {
-                              setState(() {
-                                notifOn = newValue;
-                              });
-                            })
-                      ],
-                    ),
-                  ),
-                ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 5),

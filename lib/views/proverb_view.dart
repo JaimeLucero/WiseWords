@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
+import 'package:wise_words/theme/colors.dart';
 
 class ProverbView extends StatefulWidget {
   const ProverbView(
@@ -28,6 +29,7 @@ class _ProverbViewState extends State<ProverbView> {
   Widget build(BuildContext context) {
     EdgeInsets padding = MediaQuery.of(context).padding;
     var height = MediaQuery.of(context).size.height;
+    AppColors color = AppColors();
 
     return Scaffold(
       body: Container(
@@ -120,10 +122,10 @@ class _ProverbViewState extends State<ProverbView> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          await widget.Avl.writeFile();
                           bool newLikeStatus = !widget.proverb.ifLike();
                           widget.proverb.setLike(newLikeStatus);
                           widget.onLikedChange(newLikeStatus);
+                          await widget.Avl.writeFile();
                           if(newLikeStatus) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
@@ -193,7 +195,7 @@ class _ProverbViewState extends State<ProverbView> {
                           (item) => Column(
                             children: [
                               ProverbCard(
-                                cardColor: Color(0xB2E50058),
+                                cardColor: color.getNextColor(),
                                 proverb: item,
                                 Avl:widget.Avl,
                                 onLikedChange: widget.onLikedChange,

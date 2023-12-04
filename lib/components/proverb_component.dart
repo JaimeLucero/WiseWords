@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/engines/related_proverbs.dart';
+import 'package:wise_words/theme/colors.dart';
 import 'package:wise_words/views/proverb_view.dart';
 
 class ProverbCard extends StatelessWidget {
@@ -108,11 +109,11 @@ class ProverbCard extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () async {
-                            await Avl.writeFile();
                             bool newLikeStatus = !proverb.ifLike();
                             proverb.setLike(newLikeStatus);
                             onLikedChange(newLikeStatus);
-                            if(newLikeStatus){
+                            await Avl.writeFile();
+                            if (newLikeStatus) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text('Proverb added to likes.'),

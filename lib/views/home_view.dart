@@ -4,6 +4,7 @@ import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/engines/likes_generator.dart';
+import 'package:wise_words/theme/colors.dart';
 import 'package:wise_words/views/settings_view.dart';
 
 class HomeView extends StatelessWidget {
@@ -22,6 +23,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    AppColors color = AppColors();
 
     return Center(
         child: Container(
@@ -49,7 +51,10 @@ class HomeView extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SettingsView(likes: likes, Avl: Avl,)),
+                                    builder: (context) => SettingsView(
+                                          likes: likes,
+                                          Avl: Avl,
+                                        )),
                               );
                             },
                             child: SvgPicture.asset(
@@ -76,7 +81,7 @@ class HomeView extends StatelessWidget {
                                     (item) => Column(
                                       children: [
                                         ProverbCard(
-                                          cardColor: Color.fromARGB(177, 222, 101, 148),
+                                          cardColor: color.getNextColor(),
                                           proverb: item,
                                           Avl: Avl,
                                           onLikedChange: onLikedChange,
