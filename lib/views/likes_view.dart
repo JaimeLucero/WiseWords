@@ -4,6 +4,7 @@ import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/theme/colors.dart';
 
+// ignore: must_be_immutable
 class LikesView extends StatelessWidget {
   List<String> keyword = ['Keyword1', 'Keyword2'];
   List<Proverb> data = [];
@@ -65,7 +66,7 @@ class LikesView extends StatelessWidget {
                                       Avl: Avl,
                                       onLikedChange: onLikedChange,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                         height:
                                             16), // Adjust the height based on your preference
                                   ],

@@ -122,7 +122,7 @@ class _SettingsViewState extends State<SettingsView> {
             Container(
                 padding: EdgeInsets.only(bottom: padding.bottom),
                 child: const Text(
-                  'Build v0.0.0.0',
+                  'Build v0.0.0.1',
                   style: TextStyle(
                     color: Color(0xFF1E1E1E),
                     fontSize: 14,

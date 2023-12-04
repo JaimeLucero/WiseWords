@@ -9,6 +9,7 @@ import 'package:wise_words/views/likes_view.dart';
 import 'package:wise_words/views/search_view.dart';
 import 'package:wise_words/views/searchresult_view.dart';
 
+// ignore: must_be_immutable
 class ViewTemplate extends StatefulWidget {
   ViewTemplate(
       {super.key,
@@ -111,7 +112,6 @@ class _ViewTemplateState extends State<ViewTemplate> {
                                     showLikes = false;
                                     showSearch = false;
                                     widget.searchResult = false;
-                                    onLikedChange:
                                     handleLikeChanged;
                                   }
                                 });
