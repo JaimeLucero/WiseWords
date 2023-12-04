@@ -57,7 +57,7 @@ class Proverb implements Comparable<Proverb> {
 
   @override
   String toString() {
-    return 'Proverb{chapter: $chapter, verse: $verse, unformatted: $unformatted, formatted: $formatted, keywords: $keywords, like: $like}';
+    return 'Proverb $chapter : $verse \n$formatted';
   }
 
   String toWrite() {

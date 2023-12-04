@@ -7,6 +7,7 @@ import 'package:wise_words/engines/likes_generator.dart';
 import 'package:wise_words/theme/colors.dart';
 import 'package:wise_words/views/settings_view.dart';
 
+// ignore: must_be_immutable
 class HomeView extends StatelessWidget {
   List<Proverb> data = [];
   AvlData Avl;

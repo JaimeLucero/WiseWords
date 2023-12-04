@@ -6,6 +6,7 @@ import 'package:wise_words/engines/search_engine.dart';
 import 'package:wise_words/views/filters_view.dart';
 import 'package:wise_words/views/view_template.dart';
 
+// ignore: must_be_immutable
 class Searchbar extends StatelessWidget {
   Searchbar(
       {super.key, required this.query, required this.data, required this.Avl});

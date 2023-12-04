@@ -5,6 +5,7 @@ import 'package:wise_words/components/proverb_component.dart';
 import 'package:wise_words/components/searchbar_component.dart';
 import 'package:wise_words/theme/colors.dart';
 
+// ignore: must_be_immutable
 class SearchResults extends StatelessWidget {
   List<String> keyword = ['Keyword1', 'Keyword2'];
 
