@@ -120,18 +120,35 @@ class AvlData extends AvlTreeSet<Proverb> {
 
   Future<void> writeFile() async {
     File file = await _localFile;
-    await file.writeAsString('');
-    for (var element in super.toList()) {
-      String line = element.toList().join('\t');
-      await file.writeAsString('$line\n', mode: FileMode.append);
+    IOSink? sink; // Declare 'sink' as nullable
+
+    try {
+      sink = file.openWrite();
+      for (var element in super.toList()) {
+        String line = element.toList().join('\t');
+        sink.write('$line\n');
+      }
+
+      // Flush data to ensure it's persisted immediately
+      await sink.flush();
+      print('done write');
+
+      String contents = await file.readAsString();
+      print('File Contents: $contents');
+    } catch (e) {
+      print('Error writing to file: $e');
+    } finally {
+      await sink?.close(); // Close 'sink' if it's not null
     }
-    print('done write');
+
+
+
   }
 
   Future<void> saveFileToDocumentDirectory(String content) async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/data_set_test.tsv');
+      final file = File('${directory.path}/data_set.tsv');
       forEach((element) {
         proverbsList.add(element.toList());
       });
@@ -147,7 +164,7 @@ class AvlData extends AvlTreeSet<Proverb> {
   Future<void> removeFile() async {
     try {
       final directory = await getApplicationDocumentsDirectory();
-      final filePath = '${directory.path}/data_set_test.tsv';
+      final filePath = '${directory.path}/data_set.tsv';
       final file = File(filePath);
 
       if (file.existsSync()) {

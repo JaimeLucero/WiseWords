@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:wise_words/avltree/initalize_avl.dart';
 import 'package:wise_words/avltree/proverb.dart';
 import 'package:wise_words/components/proverb_component.dart';
+import 'package:wise_words/theme/colors.dart';
 
 class LikesView extends StatelessWidget {
   List<String> keyword = ['Keyword1', 'Keyword2'];
   List<Proverb> data = [];
   AvlData Avl;
   final Function(bool) onLikedChange;
-  
-  LikesView({super.key, required this.data, required this.onLikedChange, required this.Avl});
+
+  LikesView(
+      {super.key,
+      required this.data,
+      required this.onLikedChange,
+      required this.Avl});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    AppColors color = AppColors();
 
     return Center(
       child: SizedBox(
@@ -41,12 +47,12 @@ class LikesView extends StatelessWidget {
                 ),
                 Flexible(
                   child: Container(
-                    height: height -
-                        (166 + MediaQuery.of(context).padding.bottom),
+                    height:
+                        height - (166 + MediaQuery.of(context).padding.bottom),
                     child: SingleChildScrollView(
                       child: Container(
-                        padding: const EdgeInsets.only(
-                            top: 45, left: 30, right: 30),
+                        padding:
+                            const EdgeInsets.only(top: 45, left: 30, right: 30),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: data
@@ -54,7 +60,7 @@ class LikesView extends StatelessWidget {
                                 (item) => Column(
                                   children: [
                                     ProverbCard(
-                                      cardColor: Color.fromARGB(177, 222, 101, 148),
+                                      cardColor: color.getNextColor(),
                                       proverb: item,
                                       Avl: Avl,
                                       onLikedChange: onLikedChange,
