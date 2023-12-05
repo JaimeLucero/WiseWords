@@ -17,15 +17,6 @@ class _WelcomeViewState extends State<WelcomeView> {
   void initState() {
     super.initState();
 
-    // Use a post-frame callback to navigate after the build is complete
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(const Duration(seconds: 3), () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ViewTemplate(searchResult: false, query: "", data: widget.data, queryList: [], filter: [],)),
-        );
-      });
-    });
   }
   
   @override
@@ -90,6 +81,15 @@ class _WelcomeViewState extends State<WelcomeView> {
                           displayFullTextOnTap: true,
                           isRepeatingAnimation: false,
                         ),
+                      ),
+                      const SizedBox(height: 50,),
+                      const Text(
+                        'Tap to start',
+                        style: TextStyle(
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xffFCFCFC)),
                       )
                     ],
                   ),

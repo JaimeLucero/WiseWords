@@ -13,7 +13,7 @@ class RelatedProverbs {
     data.forEach((prov) {
       if (proverb
           .getKeywords()
-          .any((keyword) => prov.getUnformatted().contains(keyword))) {
+          .any((keyword) => prov.getUnformatted().contains(keyword)) && prov != proverb) {
         related.add(prov);
       }
     });

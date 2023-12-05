@@ -13,12 +13,22 @@ class Searchbar extends StatelessWidget {
   final String query;
   final List<Proverb> data;
   final AvlData Avl;
-  List<int> filter = [0,0];
+  static List<int> filter = [0,0];
+
+  final TextEditingController _textController = TextEditingController();
+
+    Future<List<int>> _filtersView(BuildContext context) async {
+      List<int> filter = await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const FiltersView()),
+      );
+
+      return filter;
+    }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    TextEditingController _textController = TextEditingController();
     _textController.text = query;
 
     return Container(
@@ -40,7 +50,6 @@ class Searchbar extends StatelessWidget {
                 GestureDetector(
                   onTap: () async {
                     filter = await _filtersView(context);
-                    print('filters ${filter.toList()}');
                   },
                   child: SvgPicture.asset(
                     'assets/images/filter.svg',
@@ -55,23 +64,26 @@ class Searchbar extends StatelessWidget {
                   child: TextField(
                     controller: _textController,
                     onSubmitted: (text) {
-                      SearchEngine search = SearchEngine(
-                        text,
-                        Avl,
-                        filter,
-                      );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ViewTemplate(
-                              searchResult: true,
-                              query: text,
-                              queryList: search.getResults(),
-                              data: Avl,
-                              filter: filter,
+                        print(filter);
+                        if (filter[0] != 0 || filter[1] != 0 || text != '') {
+                           SearchEngine search = SearchEngine(
+                              text,
+                              Avl,
+                              filter,
+                            );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ViewTemplate(
+                                searchResult: true,
+                                query: text,
+                                queryList: search.getResults(),
+                                data: Avl,
+                                filter: filter,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        }
                     },
                     style: const TextStyle(
                       fontFamily: 'Montserrat',
@@ -103,14 +115,5 @@ class Searchbar extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<List<int>> _filtersView(BuildContext context) async {
-    List<int> filter = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FiltersView()),
-    );
-
-    return filter;
   }
 }
