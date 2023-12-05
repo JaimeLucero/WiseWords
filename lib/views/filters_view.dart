@@ -12,7 +12,14 @@ class _FiltersViewState extends State<FiltersView> {
   bool isDark = false;
   String selectedChapter = 'Chapter 0';
   String selectedVerse = 'Verse 0';
-  List<int> selected = [0, 0];
+  static List<int> selected = [0, 0];
+
+  @override
+  void initState() {
+    super.initState();
+    selectedChapter = 'Chapter ${selected[0]}';
+    selectedVerse = 'Verse ${selected[1]}';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +42,7 @@ class _FiltersViewState extends State<FiltersView> {
               ),
               GestureDetector(
                 onTap: () {
+                  print(selected.toList());
                   Navigator.pop(context, selected);
                 },
                 child: SvgPicture.asset('assets/images/back.svg'),

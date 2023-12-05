@@ -19,8 +19,6 @@ class SearchEngine {
               element.getKeywords().contains(query)) {
             result.add(element);
           }
-        } else {
-          result.add(element);
         }
       } else if (filter[0] == 0) {
         if (query != '') {
@@ -63,7 +61,6 @@ class SearchEngine {
   }
 
   List<Proverb> getResults() {
-    print(data.toList());
     return result;
   }
 }
