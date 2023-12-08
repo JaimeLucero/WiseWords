@@ -64,7 +64,6 @@ class Searchbar extends StatelessWidget {
                   child: TextField(
                     controller: _textController,
                     onSubmitted: (text) {
-                        print(filter);
                         if (filter[0] != 0 || filter[1] != 0 || text != '') {
                            SearchEngine search = SearchEngine(
                               text,
@@ -83,6 +82,7 @@ class Searchbar extends StatelessWidget {
                               ),
                             ),
                           );
+                          _textController.clear();
                         }
                     },
                     style: const TextStyle(

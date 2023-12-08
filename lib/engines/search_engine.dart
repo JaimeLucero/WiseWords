@@ -22,9 +22,9 @@ class SearchEngine {
         }
       } else if (filter[0] == 0) {
         if (query != '') {
-          if (element.getUnformatted().contains(query) ||
-              element.getKeywords().contains(query) &&
-                  element.getVerse() == filter[1]) {
+          if ((element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query)) &&
+                  (element.getVerse() == filter[1])) {
             result.add(element);
           }
         } else {
@@ -34,9 +34,9 @@ class SearchEngine {
         }
       } else if (filter[1] == 0) {
         if (query != '') {
-          if (element.getUnformatted().contains(query) ||
-              element.getKeywords().contains(query) &&
-                  element.getChapter() == filter[0]) {
+          if ((element.getUnformatted().contains(query) ||
+              element.getKeywords().contains(query)) &&
+                  (element.getChapter() == filter[0])) {
             result.add(element);
           }
         } else {

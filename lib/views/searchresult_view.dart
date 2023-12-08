@@ -26,7 +26,7 @@ class SearchResults extends StatelessWidget {
 
     return Container(
       width: width,
-      height: height - 60,
+      height: height - 160,
       child: SingleChildScrollView(
         child: Column(
           children: [

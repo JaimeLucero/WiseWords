@@ -106,15 +106,15 @@ class _ViewTemplateState extends State<ViewTemplate> {
                               _buildSvgButton('assets/images/home.svg',
                                   const Color(0xffFCFCFC), showHome, () {
                                 // Handle tap for the first button
-                                setState(() {
                                   if (!showHome) {
-                                    showHome = true;
+                                    setState(() {
+                                      showHome = true;
                                     showLikes = false;
                                     showSearch = false;
                                     widget.searchResult = false;
                                     handleLikeChanged;
-                                  }
-                                });
+                                    });
+                                  };
                                 print('Button 1 tapped!');
                               }),
                               const SizedBox(
@@ -123,14 +123,14 @@ class _ViewTemplateState extends State<ViewTemplate> {
                               _buildSvgButton('assets/images/search.svg',
                                   const Color(0xffFCFCFC), showSearch, () {
                                 // Handle tap for the first button
-                                setState(() {
-                                  if (!showSearch) {
-                                    showSearch = true;
-                                    showHome = false;
-                                    showLikes = false;
-                                    widget.searchResult = false;
-                                  }
-                                });
+                                if (!showSearch) {
+                                    setState(() {
+                                     showSearch = true;
+                                      showHome = false;
+                                      showLikes = false;
+                                      widget.searchResult = false;
+                                    });
+                                  };
                                 print('Button 2 tapped!');
                               }),
                               const SizedBox(
@@ -140,14 +140,14 @@ class _ViewTemplateState extends State<ViewTemplate> {
                                   const Color(0xffFCFCFC), showLikes, () {
                                 // Handle tap for the first button
                                 initLikesList();
-                                setState(() {
-                                  if (!showLikes) {
+                                if (!showLikes) {
+                                    setState(() {
                                     showLikes = true;
                                     showHome = false;
                                     showSearch = false;
                                     widget.searchResult = false;
-                                  }
-                                });
+                                    });
+                                };
                                 print('Button 3 tapped!');
                               }),
                             ],
@@ -189,8 +189,7 @@ class _ViewTemplateState extends State<ViewTemplate> {
     );
   }
 
-  Widget _buildSvgButton(
-      String assetPath, Color iconColor, bool isCurrentPage, onPressed) {
+  Widget _buildSvgButton(String assetPath, Color iconColor, bool isCurrentPage, VoidCallback onPressed) {
     return GestureDetector(
       onTap: onPressed,
       child: SvgPicture.asset(
